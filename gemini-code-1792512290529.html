@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>house. prjct — your favorite dayclub hotspot</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #F5EFEB;
+      --card-bg: #EFE8E2;
+      --terracotta: #D04F34;
+      --terracotta-hover: #B83E25;
+      --sand: #DEC6B3;
+      --brown: #3E1E14;
+      --brown-light: #6E5349;
+      --white: #FFFFFF;
+      --border: rgba(62, 30, 20, 0.12);
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg);
+      color: var(--brown);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      padding-top: 85px;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      height: 85px;
+      background: rgba(245, 239, 235, 0.94);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--terracotta);
+    }
+
+    .brand img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--brown);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover { color: var(--terracotta); }
+
+    .btn-ticket {
+      background: var(--terracotta);
+      color: var(--white);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 99px;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(208, 79, 52, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .btn-ticket:hover {
+      background: var(--terracotta-hover);
+      transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 60px 5% 70px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-img-wrap {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      box-shadow: 0 15px 40px rgba(62, 30, 20, 0.12);
+    }
+
+    .hero-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(245, 239, 235, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--terracotta);
+    }
+
+    .hero-text h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+      line-height: 1.12;
+      color: var(--terracotta);
+      margin-bottom: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-sub {
+      font-size: 1.25rem;
+      color: var(--brown);
+      margin-bottom: 24px;
+    }
+
+    .next-box {
+      display: inline-block;
+      padding: 8px 18px;
+      background: rgba(208, 79, 52, 0.1);
+      border: 1px dashed var(--terracotta);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: var(--brown);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      padding: 12px 24px;
+      border-radius: 99px;
+      background: transparent;
+      border: 1.5px solid var(--brown);
+      color: var(--brown);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: var(--brown);
+      color: var(--white);
+    }
+
+    /* GENERAL SECTIONS */
+    .section-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 70px 5%;
+    }
+
+    .section-header {
+      margin-bottom: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--brown);
+    }
+
+    /* BENTO & FACTS */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    .bento-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bento-card.dark {
+      background: var(--terracotta);
+      color: var(--white);
+    }
+
+    .bento-card.dark h3 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+    }
+
+    .bento-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 18px;
+    }
+
+    .fact-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    .fact-label { font-weight: 600; }
+
+    /* EVENTS */
+    .events-filter {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .filter-btn {
+      padding: 8px 20px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--brown);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .filter-btn.active {
+      background: var(--terracotta);
+      color: var(--white);
+      border-color: var(--terracotta);
+    }
+
+    .events-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .event-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .event-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .event-card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .event-date {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--terracotta);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .event-card-body h4 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    /* DRINKS SECTION */
+    .drinks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      align-items: center;
+    }
+
+    .drinks-img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+
+    .drink-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .drink-item h5 { font-size: 1.15rem; }
+    .drink-item span { font-weight: 700; color: var(--terracotta); font-size: 1.1rem; }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .modal-backdrop.show { display: flex; }
+
+    .modal-content {
+      background: var(--bg);
+      max-width: 480px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 36px;
+      position: relative;
+      border: 1px solid var(--border);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      border: none;
+      background: transparent;
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--brown);
+    }
+
+    .ticket-selector {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      padding: 12px 18px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--white);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--brown);
+      color: var(--sand);
+      padding: 60px 5% 40px;
+      text-align: center;
+    }
+
+    footer p { margin-top: 10px; font-size: 0.9rem; opacity: 0.8; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .drinks-grid { grid-template-columns: 1fr; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="#" class="brand">
+      <img src="logo.png" alt="house. logo" onerror="this.style.display='none'">
+      <span class="brand-title">house. prjct</span>
+    </a>
+    <nav>
+      <a href="#events">Events</a>
+      <a href="#facts">Hard Facts</a>
+      <a href="#drinks">Food & Drinks</a>
+      <button class="btn-ticket" onclick="openTicketModal('General Dayclub Pass', 15)">Tickets & Register</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="hero-img-wrap">
+        <img src="hero.jpg" alt="house. lovers hug">
+        <div class="hero-badge">welcome home &lt;3</div>
+      </div>
+      <div class="hero-text">
+        <h1>Your Favorite Dayclub Hotspot 🪩🧡</h1>
+        <p class="hero-sub">can’t wait to see u soon at house. dayclub!</p>
+        <div class="next-box">🔜 NEXT: SATURDAY, 05/12 • 2 PM – 10 PM</div>
+        <div class="hero-actions">
+          <button class="btn-ticket" onclick="openTicketModal('Next Edition — 05/12', 15)">Get Tickets</button>
+          <a href="#facts" class="btn-secondary">Explore Facts</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENTS & EDITIONS -->
+    <section id="events" class="section-wrap">
+      <div class="section-header">
+        <h2 class="section-title">Events & Editions</h2>
+      </div>
+      
+      <div class="events-filter">
+        <button class="filter-btn active" onclick="filterEvents('all', this)">All</button>
+        <button class="filter-btn" onclick="filterEvents('upcoming', this)">Upcoming</button>
+        <button class="filter-btn" onclick="filterEvents('past', this)">Recaps</button>
+      </div>
+
+      <div class="events-list">
+        <!-- Event 1: Special Hausberg -->
+        <div class="event-card" data-category="upcoming">
+          <img src="hausberg.jpg" alt="house. am hausberg">
+          <div class="event-card-body">
+            <div>
+              <div class="event-date">18/09 • Special Edition</div>
+              <h4>house. am hausberg</h4>
+              <p style="color: var(--brown-light); margin-bottom: 18px;">Open-air sunset beats overlooking the valley with refreshing signature drinks.</p>
+            </div>
+            <button class="btn-ticket" onclick="openTicketModal('house. am hausberg 18/09', 18)">Get Ticket • €18</button>
+          </div>
+        </div>
+
+        <!-- Event 2: Regular Next Dayclub -->
+        <div class="event-card" data-category="upcoming">
+          <img src="hero.jpg" alt="house. dayclub edition">
+          <div class="event-card-body">
+            <div>
+              <div class="event-date">05/12 • 2 PM - 10 PM</div>
+              <h4>house. dayclub #04</h4>
+              <p style="color: var(--brown-light); margin-bottom: 18px;">Electronic house vibes, disco spheres and great people in an intimate setting.</p>
+            </div>
+            <button class="btn-ticket" onclick="openTicketModal('house. dayclub #04', 15)">Get Ticket • €15</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HARD FACTS -->
+    <section id="facts" class="section-wrap">
+      <div class="section-header">
+        <h2 class="section-title">Hard Facts & Vibes</h2>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-card dark">
+          <h3>welcome home &lt;3</h3>
+          <p>house. prjct is an exclusive outdoor day party where electronic house music, good drinks, and scenic outdoor locations come together for an unforgettable experience.</p>
+          <div style="margin-top: 24px; font-weight: 600;">#houseparty #electronicbeats</div>
+        </div>
+
+        <div class="bento-card">
+          <img src="spritz.jpg" alt="Spritz Moment">
+          <div class="fact-row"><span class="fact-label">Sound</span><span>Best of House Music</span></div>
+          <div class="fact-row"><span class="fact-label">Hours</span><span>14:00 – 22:00 Uhr</span></div>
+          <div class="fact-row"><span class="fact-label">Access</span><span>Limited Capacity</span></div>
+        </div>
+
+        <div class="bento-card">
+          <h3 style="font-family: var(--font-serif); margin-bottom: 12px;">Next Up: 05/12</h3>
+          <p style="color: var(--brown-light); margin-bottom: 20px;">Secure your friendslist wristband early before limited guest capacity runs out.</p>
+          <button class="btn-ticket" style="width: 100%;" onclick="openTicketModal('Next Up: 05/12', 15)">Get Ticket • €15</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOD & DRINKS -->
+    <section id="drinks" class="section-wrap">
+      <div class="section-header">
+        <h2 class="section-title">Drinks & Bites</h2>
+      </div>
+      <div class="drinks-grid">
+        <img src="drinks.jpg" alt="Cold Drinks Bucket" class="drinks-img">
+        <div class="drinks-menu">
+          <div class="drink-item">
+            <div><h5>Signature Spritz 🍊</h5><small>Aperol, Prosecco, Soda, Fresh Orange</small></div>
+            <span>€7.50</span>
+          </div>
+          <div class="drink-item">
+            <div><h5>Limoncello Spritz 🍋</h5><small>Limoncello, Prosecco, Soda, Fresh Mint</small></div>
+            <span>€7.50</span>
+          </div>
+          <div class="drink-item">
+            <div><h5>Ice Bucket Deal 🧊</h5><small>5x Ice-cold beers served in a iced bucket</small></div>
+            <span>€24.00</span>
+          </div>
+          <div class="drink-item">
+            <div><h5>Club Snacks</h5><small>Truffle chips, salted almonds, Spanish olives</small></div>
+            <span>€4.50</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- INTERACTIVE TICKET MODAL -->
+  <div id="ticketModal" class="modal-backdrop" onclick="if(event.target===this)closeModal()">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 6px;">Tickets & Register</h3>
+      <p id="modalEventName" style="color: var(--terracotta); font-weight: 700; margin-bottom: 20px;"></p>
+      
+      <div class="ticket-selector">
+        <div>
+          <div style="font-weight: 700;">Quantity</div>
+          <small id="singlePriceDisplay" style="color: var(--brown-light);">€15.00 each</small>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button class="qty-btn" type="button" onclick="updateQty(-1)">-</button>
+          <span id="ticketQty" style="font-weight: 700; font-size: 1.1rem;">1</span>
+          <button class="qty-btn" type="button" onclick="updateQty(1)">+</button>
+        </div>
+      </div>
+
+      <form onsubmit="handleCheckout(event)">
+        <input type="text" placeholder="Full Name" required style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit;">
+        <input type="email" placeholder="E-Mail Address" required style="width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit;">
+        <button type="submit" class="btn-ticket" style="width: 100%;">
+          Complete Registration (<span id="totalPriceDisplay">€15.00</span>)
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <h3 style="font-family: var(--font-serif); font-size: 2rem; color: var(--terracotta);">house. prjct</h3>
+    <p>your favorite dayclub hotspot 🪩🧡</p>
+    <p style="margin-top: 24px;">can’t wait to see u soon at house. dayclub!</p>
+    <p style="opacity: 0.5; margin-top: 10px; font-size: 0.8rem;">© 2026 house. prjct. All rights reserved.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    let currentBasePrice = 15;
+    let currentQty = 1;
+
+    function openTicketModal(eventName, price = 15) {
+      currentBasePrice = price;
+      currentQty = 1;
+      document.getElementById('modalEventName').textContent = eventName;
+      document.getElementById('singlePriceDisplay').textContent = '€' + price.toFixed(2) + ' each';
+      updateTotal();
+      document.getElementById('ticketModal').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('ticketModal').classList.remove('show');
+    }
+
+    function updateQty(change) {
+      currentQty = Math.max(1, Math.min(10, currentQty + change));
+      document.getElementById('ticketQty').textContent = currentQty;
+      updateTotal();
+    }
+
+    function updateTotal() {
+      const total = currentBasePrice * currentQty;
+      document.getElementById('totalPriceDisplay').textContent = '€' + total.toFixed(2);
+    }
+
+    function handleCheckout(e) {
+      e.preventDefault();
+      alert("Welcome home! <3 You're officially on the friendslist 🧡");
+      closeModal();
+    }
+
+    function filterEvents(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const cards = document.querySelectorAll('.event-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
