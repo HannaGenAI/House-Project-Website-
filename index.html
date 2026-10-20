@@ -322,4 +322,90 @@
 
     /* SOUND PREVIEW PLAYER */
     .sound-preview-btn {
-      background
+      background: var(--terracotta);
+      color: #FFFFFF;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .sound-preview-btn:hover {
+      background: var(--terracotta-hover);
+      transform: scale(1.05);
+    }
+
+    /* Equalizer Waves Animation */
+    .sound-waves {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 12px;
+    }
+
+    .sound-waves span {
+      width: 2.5px;
+      height: 4px;
+      background: #FFFFFF;
+      border-radius: 2px;
+      transition: height 0.2s ease;
+    }
+
+    .playing .sound-waves span:nth-child(1) { animation: soundWave 0.8s infinite ease-in-out; }
+    .playing .sound-waves span:nth-child(2) { animation: soundWave 0.8s 0.2s infinite ease-in-out; }
+    .playing .sound-waves span:nth-child(3) { animation: soundWave 0.8s 0.4s infinite ease-in-out; }
+
+    @keyframes soundWave {
+      0%, 100% { height: 4px; }
+      50% { height: 12px; }
+    }
+
+    /* EVENTS */
+    .events-filter {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .filter-btn {
+      padding: 8px 20px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--brown);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .filter-btn.active {
+      background: var(--terracotta);
+      color: #FFFFFF;
+      border-color: var(--terracotta);
+    }
+
+    .events-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .event-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: background 0.4s ease;
+    }
+
+    .event-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover
