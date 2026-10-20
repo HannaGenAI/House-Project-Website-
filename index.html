@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,600&display=swap" rel="stylesheet">
   
+  <!-- Konfetti-Bibliothek -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
   <style>
     :root {
       --bg: #F5EFEB;
@@ -164,16 +167,25 @@
       margin-bottom: 24px;
     }
 
+    /* COUNTDOWN BOX */
     .next-box {
-      display: inline-block;
-      padding: 8px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
       background: rgba(208, 79, 52, 0.1);
       border: 1px dashed var(--terracotta);
-      border-radius: 8px;
-      font-size: 0.9rem;
+      border-radius: 99px;
+      font-size: 0.95rem;
       font-weight: 700;
       margin-bottom: 30px;
       color: var(--brown);
+    }
+
+    #countdownTimer {
+      color: var(--terracotta);
+      letter-spacing: 0.5px;
+      font-variant-numeric: tabular-nums;
     }
 
     .hero-actions {
@@ -418,6 +430,14 @@
       cursor: pointer;
     }
 
+    /* SUCCESS POPUP */
+    .success-badge {
+      display: none;
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .success-badge.show { display: block; }
+
     /* FOOTER */
     footer {
       background: var(--brown);
@@ -463,7 +483,14 @@
       <div class="hero-text">
         <h1>Your Favorite Dayclub Hotspot 🪩🧡</h1>
         <p class="hero-sub">can’t wait to see u soon at house. dayclub!</p>
-        <div class="next-box">🔜 NEXT: SATURDAY, 05/12 • 2 PM – 10 PM</div>
+        
+        <!-- LIVE COUNTDOWN BOX -->
+        <div class="next-box">
+          <span>🔜 NEXT: 05/12</span>
+          <span>•</span>
+          <span id="countdownTimer">Loading...</span>
+        </div>
+
         <div class="hero-actions">
           <button class="btn-ticket" onclick="openTicketModal('Next Edition — 05/12', 15)">Get Tickets</button>
           <a href="#facts" class="btn-secondary">Explore Facts</a>
@@ -572,28 +599,41 @@
   <div id="ticketModal" class="modal-backdrop" onclick="if(event.target===this)closeModal()">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal()">&times;</button>
-      <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 6px;">Tickets & Register</h3>
-      <p id="modalEventName" style="color: var(--terracotta); font-weight: 700; margin-bottom: 20px;"></p>
       
-      <div class="ticket-selector">
-        <div>
-          <div style="font-weight: 700;">Quantity</div>
-          <small id="singlePriceDisplay" style="color: var(--brown-light);">€15.00 each</small>
+      <!-- FORM CONTENT -->
+      <div id="modalFormContainer">
+        <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 6px;">Tickets & Register</h3>
+        <p id="modalEventName" style="color: var(--terracotta); font-weight: 700; margin-bottom: 20px;"></p>
+        
+        <div class="ticket-selector">
+          <div>
+            <div style="font-weight: 700;">Quantity</div>
+            <small id="singlePriceDisplay" style="color: var(--brown-light);">€15.00 each</small>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <button class="qty-btn" type="button" onclick="updateQty(-1)">-</button>
+            <span id="ticketQty" style="font-weight: 700; font-size: 1.1rem;">1</span>
+            <button class="qty-btn" type="button" onclick="updateQty(1)">+</button>
+          </div>
         </div>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <button class="qty-btn" type="button" onclick="updateQty(-1)">-</button>
-          <span id="ticketQty" style="font-weight: 700; font-size: 1.1rem;">1</span>
-          <button class="qty-btn" type="button" onclick="updateQty(1)">+</button>
-        </div>
+
+        <form onsubmit="handleCheckout(event)">
+          <input type="text" placeholder="Full Name" required style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit;">
+          <input type="email" placeholder="E-Mail Address" required style="width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit;">
+          <button type="submit" class="btn-ticket" style="width: 100%;">
+            Complete Registration (<span id="totalPriceDisplay">€15.00</span>)
+          </button>
+        </form>
       </div>
 
-      <form onsubmit="handleCheckout(event)">
-        <input type="text" placeholder="Full Name" required style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit;">
-        <input type="email" placeholder="E-Mail Address" required style="width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit;">
-        <button type="submit" class="btn-ticket" style="width: 100%;">
-          Complete Registration (<span id="totalPriceDisplay">€15.00</span>)
-        </button>
-      </form>
+      <!-- SUCCESS MESSAGE WITH CONFETTI -->
+      <div id="modalSuccessContainer" class="success-badge">
+        <div style="font-size: 3rem; margin-bottom: 10px;">🎉🪩</div>
+        <h3 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--terracotta); margin-bottom: 8px;">Welcome Home! &lt;3</h3>
+        <p style="color: var(--brown); font-size: 1.05rem; margin-bottom: 24px;">You're officially on the friendslist. Check your inbox for confirmation!</p>
+        <button class="btn-secondary" onclick="closeModal()" style="margin: 0 auto;">Done</button>
+      </div>
+
     </div>
   </div>
 
@@ -610,12 +650,44 @@
     let currentBasePrice = 15;
     let currentQty = 1;
 
+    // --- 1. LIVE COUNTDOWN LOGIC ---
+    function startCountdown() {
+      // Zieltermin: 5. Dezember 2026, 14:00 Uhr
+      const eventDate = new Date("December 5, 2026 14:00:00").getTime();
+      
+      const timerElement = document.getElementById("countdownTimer");
+
+      setInterval(() => {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        if (distance < 0) {
+          timerElement.innerText = "WE ARE LIVE NOW! 🪩";
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        timerElement.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }, 1000);
+    }
+    startCountdown();
+
+    // --- MODAL & CHECKOUT LOGIC ---
     function openTicketModal(eventName, price = 15) {
       currentBasePrice = price;
       currentQty = 1;
       document.getElementById('modalEventName').textContent = eventName;
       document.getElementById('singlePriceDisplay').textContent = '€' + price.toFixed(2) + ' each';
       updateTotal();
+      
+      // Reset Modal Views
+      document.getElementById('modalFormContainer').style.display = 'block';
+      document.getElementById('modalSuccessContainer').classList.remove('show');
+      
       document.getElementById('ticketModal').classList.add('show');
     }
 
@@ -634,10 +706,38 @@
       document.getElementById('totalPriceDisplay').textContent = '€' + total.toFixed(2);
     }
 
+    // --- 2. CONFETTI BURST ON REGISTRATION ---
     function handleCheckout(e) {
       e.preventDefault();
-      alert("Welcome home! <3 You're officially on the friendslist 🧡");
-      closeModal();
+
+      // Formular ausblenden & Erfolgsmeldung anzeigen
+      document.getElementById('modalFormContainer').style.display = 'none';
+      document.getElementById('modalSuccessContainer').classList.add('show');
+
+      // 2-facher Konfetti-Stoß (Club-Farben: Terracotta, Gold, Weiß)
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#D04F34', '#DEC6B3', '#FFFFFF', '#FFA726']
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#D04F34', '#DEC6B3']
+        });
+        confetti({
+          particleCount: 50,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#D04F34', '#DEC6B3']
+        });
+      }, 250);
     }
 
     function filterEvents(category, btn) {
